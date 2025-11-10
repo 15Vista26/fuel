@@ -66,10 +66,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
 body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
   background: #f7f9fb;
   font-family: system-ui, sans-serif;
+
+  display: flex;
+  justify-content: center;   /* Center horizontally */
+  align-items: flex-start;   /* Content starts from top */
+  padding-top: 40px;         /* Space from top */
 }
+
+
 nav button {
   padding: 6px 14px;
   border-radius: 6px;

@@ -8,13 +8,23 @@ export default function App() {
   const [tab, setTab] = useState("routes");
 
   return (
-    <div>
-      <nav className="flex gap-4 p-4 bg-gray-200">
-        <button onClick={() => setTab("routes")}>Routes</button>
-        <button onClick={() => setTab("compare")}>Compare</button>
-        <button onClick={() => setTab("banking")}>Banking</button>
-        <button onClick={() => setTab("pooling")}>Pooling</button>
+    <div className="w-full max-w-6xl mx-auto">
+
+      <nav className="flex justify-center gap-8 p-4 bg-white shadow rounded-lg mb-6">
+        <button className={`${tab === "routes" ? "bg-blue-600 text-white" : "bg-gray-200"} px-4 py-2 rounded-md`} onClick={() => setTab("routes")}>
+          Routes
+        </button>
+        <button className={`${tab === "compare" ? "bg-blue-600 text-white" : "bg-gray-200"} px-4 py-2 rounded-md`} onClick={() => setTab("compare")}>
+          Compare
+        </button>
+        <button className={`${tab === "banking" ? "bg-blue-600 text-white" : "bg-gray-200"} px-4 py-2 rounded-md`} onClick={() => setTab("banking")}>
+          Banking
+        </button>
+        <button className={`${tab === "pooling" ? "bg-blue-600 text-white" : "bg-gray-200"} px-4 py-2 rounded-md`} onClick={() => setTab("pooling")}>
+          Pooling
+        </button>
       </nav>
+
 
       {tab === "routes" && <RoutesPage />}
       {tab === "compare" && <ComparePage />}

@@ -1,66 +1,69 @@
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { BankingService } from "../../infrastructure/BankingService";
-import { useState } from "react";
 
 export default function BankingPage() {
   const [year, setYear] = useState(2024);
-  const [amount, setAmount] = useState(0);
-
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(["cb", year], () => BankingService.getCB(year));
 
-  const bankMutation = useMutation(() => BankingService.bank(amount, year), {
-    onSuccess: () => queryClient.invalidateQueries(["cb", year]),
+  const { data, isLoading } = useQuery({
+    queryKey: ["cb", year],
+    queryFn: () => BankingService.getCB(year),
   });
 
-  const applyMutation = useMutation(() => BankingService.apply(amount, year), {
-    onSuccess: () => queryClient.invalidateQueries(["cb", year]),
+  const bank = useMutation({
+    mutationFn: () => BankingService.bank(year),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["cb", year] }),
+  });
+
+  const apply = useMutation({
+    mutationFn: () => BankingService.apply(year),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["cb", year] }),
   });
 
   if (isLoading) return <p className="p-4">Loading...</p>;
 
-  const cb = data?.cb_before ?? 0;
-  const positive = cb > 0;
-  const negative = cb < 0;
+  const disableBank = data.cb_before <= 0;
+  const disableApply = data.cb_after >= 0;
 
   return (
-    <div className="p-6 space-y-6 max-w-xl">
-      <h1 className="text-2xl font-semibold">Banking</h1>
+    <div className="p-6 space-y-4">
+      <h1 className="text-2xl font-bold">Banking</h1>
 
-      <div>
-        <label className="block mb-1">Select Year</label>
-        <select className="border p-2 w-full" value={year} onChange={(e) => setYear(Number(e.target.value))}>
-          <option value={2024}>2024</option>
-          <option value={2025}>2025</option>
-        </select>
+      <label className="block">
+        Year:
+        <input
+          type="number"
+          className="border ml-2 p-1"
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+        />
+      </label>
+
+      <div className="p-4 border rounded bg-gray-50">
+        <p>CB Before: {data.cb_before.toFixed(2)}</p>
+        <p>Applied: {data.applied.toFixed(2)}</p>
+        <p>CB After: {data.cb_after.toFixed(2)}</p>
       </div>
-
-      <div className="border p-4 rounded bg-gray-50">
-        <p className="text-lg">Current CB: <span className={positive ? "text-green-600" : negative ? "text-red-600" : ""}>{cb.toFixed(2)}</span></p>
-      </div>
-
-      <input
-        type="number"
-        className="border p-2 w-full"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(Number(e.target.value))}
-      />
 
       <button
-        disabled={!positive}
-        onClick={() => bankMutation.mutate()}
-        className={`px-4 py-2 rounded w-full ${positive ? "bg-blue-600 text-white" : "bg-gray-300 cursor-not-allowed"}`}
+        className={`px-4 py-2 rounded text-white ${
+          disableBank ? "bg-gray-400" : "bg-blue-600"
+        }`}
+        disabled={disableBank}
+        onClick={() => bank.mutate()}
       >
         Bank Surplus
       </button>
 
       <button
-        disabled={!negative}
-        onClick={() => applyMutation.mutate()}
-        className={`px-4 py-2 rounded w-full ${negative ? "bg-orange-600 text-white" : "bg-gray-300 cursor-not-allowed"}`}
+        className={`px-4 py-2 rounded text-white ${
+          disableApply ? "bg-gray-400" : "bg-green-600"
+        }`}
+        disabled={disableApply}
+        onClick={() => apply.mutate()}
       >
-        Apply Banked Surplus
+        Apply Banked Credit
       </button>
     </div>
   );

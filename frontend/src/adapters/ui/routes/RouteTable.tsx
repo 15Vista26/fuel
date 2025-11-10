@@ -1,5 +1,5 @@
-import { Route } from "../../../core/domain/Route";
-
+// import { Route } from "../../../core/domain/Route";
+import type { Route } from "../../../core/domain/Route";
 export default function RouteTable({
   routes,
   onSetBaseline,

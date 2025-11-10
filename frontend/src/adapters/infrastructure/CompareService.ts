@@ -1,11 +1,10 @@
-import axios from "axios";
-import { ICompareService, CompareItem } from "../../core/ports/ICompareService";
+import type { CompareItem, ICompareService } from "../../core/ports/ICompareService";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const CompareService: ICompareService = {
-  async getComparison(): Promise<CompareItem[]> {
-    const res = await axios.get(`${API_URL}/routes/comparison`);
-    return res.data;
+  async compare() {
+    const res = await fetch(`${API_URL}/routes/comparison`);
+    return res.json() as Promise<CompareItem[]>;
   },
 };

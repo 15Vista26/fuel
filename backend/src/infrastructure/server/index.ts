@@ -3,13 +3,14 @@ import cors from "cors";
 import { getRoutesHandler, setBaselineHandler } from "../../adapters/inbound/http/routesController";
 import { getCB, bank, apply } from "../../adapters/inbound/http/bankingController";
 import { getAdjustedCB, createPoolHandler } from "../../adapters/inbound/http/poolingController";
-
+import { getComparison } from "../../adapters/inbound/http/routesController";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Routes API
+app.get("/routes/comparison", getComparison);
 app.get("/routes", getRoutesHandler);
 app.post("/routes/:id/baseline", setBaselineHandler);
 

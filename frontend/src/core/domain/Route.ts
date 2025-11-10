@@ -6,7 +6,7 @@ export interface Route {
   year: number;
   ghgIntensity: number;
   fuelConsumption: number;
-  distanceKm: number;
+  distancekm: number;
   totalEmissions: number;
   isBaseline: boolean;
 }

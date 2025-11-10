@@ -1,11 +1,12 @@
+import type { Route } from "../domain/Route";
+
 export interface CompareItem {
-  routeId: string;
-  baselineIntensity: number;
-  comparisonIntensity: number;
+  baseline: Route;
+  comparison: Route;
   percentDiff: number;
   compliant: boolean;
 }
 
 export interface ICompareService {
-  getComparison(): Promise<CompareItem[]>;
+  compare(): Promise<CompareItem[]>;
 }

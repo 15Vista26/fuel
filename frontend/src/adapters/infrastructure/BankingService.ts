@@ -1,21 +1,26 @@
-import axios from "axios";
-import { IBankingService, ComplianceBalance } from "../../core/ports/IBankingService";
+import type { CBResult } from "../../core/domain/CBResult";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_URL = import.meta.env.VITE_API_URL;
 
-export const BankingService: IBankingService = {
-  async getCB(year: number): Promise<ComplianceBalance> {
-    const res = await axios.get(`${API_URL}/compliance/cb?year=${year}`);
-    return res.data;
+export const BankingService = {
+  async getCB(year: number): Promise<CBResult> {
+    const res = await fetch(`${API_URL}/compliance/cb?year=${year}`);
+    return res.json();
   },
 
-  async bank(amount: number, year: number): Promise<ComplianceBalance> {
-    const res = await axios.post(`${API_URL}/banking/bank`, { amount, year });
-    return res.data;
+  async bank(year: number): Promise<void> {
+    await fetch(`${API_URL}/banking/bank`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ year }),
+    });
   },
 
-  async apply(amount: number, year: number): Promise<ComplianceBalance> {
-    const res = await axios.post(`${API_URL}/banking/apply`, { amount, year });
-    return res.data;
+  async apply(year: number): Promise<void> {
+    await fetch(`${API_URL}/banking/apply`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ year }),
+    });
   },
 };

@@ -1,16 +1,12 @@
-  // Visit https://aka.ms/tsconfig to read more about this file
-  {
+{
   "compilerOptions": {
-    "target": "ES2021",
-    "module": "ESNext",
-    // "module": "commonjs",
+    "target": "ES2019",
+    "module": "commonjs",
     "moduleResolution": "node",
     "rootDir": "src",
     "outDir": "dist",
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "strict": true,
-    "strictNullChecks": true,
-    "exactOptionalPropertyTypes": true
+    "skipLibCheck": true
   }
 }

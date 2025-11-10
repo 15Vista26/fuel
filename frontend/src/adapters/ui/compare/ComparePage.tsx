@@ -38,3 +38,75 @@ export default function ComparePage() {
     </div>
   );
 }
+
+// import { useQuery } from "@tanstack/react-query";
+// import { CompareService } from "../../infrastructure/CompareService";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   Tooltip,
+//   CartesianGrid,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// export default function ComparePage() {
+//   const { data = [], isLoading } = useQuery({
+//     queryKey: ["comparison"],
+//     queryFn: CompareService.list,
+//   });
+
+//   if (isLoading) return <p className="p-4">Loading...</p>;
+
+//   return (
+//     <div className="p-6 space-y-6">
+//       <h1 className="text-2xl font-bold">Compare GHG Intensity</h1>
+
+//       <div className="overflow-x-auto">
+//         <table className="min-w-full border text-sm">
+//           <thead className="bg-gray-100">
+//             <tr>
+//               <th className="border p-2">Route</th>
+//               <th className="border p-2">Baseline</th>
+//               <th className="border p-2">Comparison</th>
+//               <th className="border p-2">% Difference</th>
+//               <th className="border p-2">Compliance</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {data.map((row: any, i: number) => (
+//               <tr key={i}>
+//                 <td className="border p-2">{row.comparison.routeId}</td>
+//                 <td className="border p-2">{row.baseline.ghgIntensity}</td>
+//                 <td className="border p-2">{row.comparison.ghgIntensity}</td>
+//                 <td className="border p-2">{row.percentDiff.toFixed(2)}%</td>
+//                 <td className="border p-2">
+//                   {row.compliant ? "✅" : "❌"}
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* Chart */}
+//       <div className="w-full h-80">
+//         <ResponsiveContainer>
+//           <BarChart data={data.map(d => ({
+//             routeId: d.comparison.routeId,
+//             Baseline: d.baseline.ghgIntensity,
+//             Comparison: d.comparison.ghgIntensity,
+//           }))}>
+//             <CartesianGrid />
+//             <XAxis dataKey="routeId" />
+//             <YAxis />
+//             <Tooltip />
+//             <Bar dataKey="Baseline" />
+//             <Bar dataKey="Comparison" />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </div>
+//   );
+// }

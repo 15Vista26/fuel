@@ -66,3 +66,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+body {
+  background: #f7f9fb;
+  font-family: system-ui, sans-serif;
+}
+nav button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid #ccc;
+}
+nav button:hover {
+  background: #e2e8f0;
+}
